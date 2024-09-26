@@ -1,7 +1,8 @@
 "use client"
-import { signIn } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Appbar = () => {
+    const session = useSession();
     return (
         <div>
             <div className="flex justify-between">
@@ -9,7 +10,8 @@ const Appbar = () => {
                     Muzi
                 </div>
                 <div>
-                    <button className="m-2 p-2 bg-blue-400" onClick={() => signIn()}></button>
+                    {session?.data?.user && <button className="m-2 p-2 bg-blue-400" onClick={() => signOut()}>SignOut</button>}
+                    {!session?.data?.user && <button className="m-2 p-2 bg-blue-400" onClick={() => signIn()}>Logout</button>}
                 </div>
             </div>
         </div>
